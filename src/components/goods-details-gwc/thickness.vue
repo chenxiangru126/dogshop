@@ -32,7 +32,7 @@
        typeN:false,
       }
     },
-     props: ['num'],
+     props: ['num','id','isShare'],
     created() {
          
         },
@@ -51,8 +51,31 @@
             this.$parent.dialog = false;
        },
        determine(){
-            this.$parent.Place_order(this.typeN);
-       },
+
+               //    debugger;
+               let typeN = this.typeN
+               if(!typeN){
+                   this.$parent.Place_order(this.typeN);
+               }else if(typeN){
+                   this.$parent.Place_order(this.typeN);
+                   //判断版权实名认证
+                   let  id = this.id
+                   let isShare = this.isShare
+                   this.util.ajax.post('/admin/sysUserReal/getId.do').then(e => {
+                       //   debugger;
+                       if( e.code == 500){
+                           //   未实名
+                           this.$router.push('/real?id='+id+'&isShare='+isShare)
+                       }else if( e.code == 200){
+                           this.$router.push('/order_create?id='+id+'&type=1&count=1')
+
+                       }
+                   }).catch()
+
+               }
+
+
+           },
        check(){
            this.typeN = !this.typeN;
            

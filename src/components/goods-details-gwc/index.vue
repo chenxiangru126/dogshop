@@ -91,7 +91,7 @@
             </div>
         </div> -->
     </div>
-      <thickness :num=number v-if="dialog"></thickness>
+      <thickness :num=number v-if="dialog" :id=id :isShare=isShare></thickness>
  </div>
 </template>
 
