@@ -186,10 +186,11 @@
                             <span class="c4 " v-else-if='state==2 && orderDetail.orderType==0'>待发货</span>
                             <span class="c4 " v-else-if='state==2 && orderDetail.orderType==1'>待确认</span>
                             <span class="c4 " v-else-if='state==3 && orderDetail.orderType==1'>变更中</span>
-                            <span class="c4 " v-else-if='state==3'>已发货</span>
+                            <span class="c4 " v-else-if='state==3 && orderDetail.orderType==0'>已发货</span>
                             <span class="c4 " v-else-if='state==4 && orderDetail.orderType==0'>待评价</span>
                             <span class="c4 " v-else-if='state==4  && orderDetail.orderType==1'>取消出售</span>
-                            <span class="c4 " v-else-if='state==5'>已完成</span>
+                            <span class="c4 " v-else-if='state==5 && orderDetail.orderType==0'>已完成</span>
+                            <span class="c4 " v-else-if='state==5 && orderDetail.orderType==1'>已转让</span>
                             <span class="c4 " v-else-if='state==6'>已取消</span>
                             <span class="c4 " v-else-if='state==7'>待处理</span>
                             <span class="c4 " v-else-if='state==8'>待退货</span>
@@ -420,7 +421,7 @@
               this.util.ajax.get('/mall/orders/getOrderDetail.do?id='+this.id).then((e)=>{
                 //   debugger;
                 if(e.code == 200){
-                    //   let old_user_id = e.data.seller.sellerId
+//                       let old_user_id = e.data.seller.sellerId
                       let old_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
                     //   let new_user_id = e.data.buyer.buyerId
                       let new_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
@@ -531,7 +532,7 @@
                     url = '/mall/orders/selleeConfirmReceipt.do',
                     _p = {
                         id: that.$route.query.id,
-                    };;
+                    };
                 that._confrim({
                     content: '请确定收到货后，确认收货。', //必填
                     yes() { //选填

@@ -63,7 +63,7 @@
                         </div>
                         <div class="flex-1 flex-v flex-j-c flex-a-e" v-if="state==5">
                             <div class="lib-btn-3" v-if='state==5 && orderDetail.orderType==0'>已完成</div>
-                            <div class="lib-btn-3" v-else-if='state==5 && orderDetail.orderType==1'>查看版权信息</div>
+                            <div class="lib-btn-3" v-else-if='state==5 && orderDetail.orderType==1' @click="see_copy_btn">查看版权信息</div>
                         </div>
                         <div class="flex-1 flex-v flex-j-c flex-a-e" v-if="state==8">
                             <div class="lib-btn-2" @click="send_goods_event">填写物流单号</div>
@@ -339,7 +339,7 @@
                 that._confrim({
                     content: '请确定收到货后，确认收货。', //必填
                     yes() { //选填
-                        that.util.ajax.post(url, _p).then(e => {
+                        that.util.ajax.get(url, _p).then(e => {
                             if (e.code == 200) {
                                 that.initData();
                             } else {
@@ -353,7 +353,86 @@
                 })
                 event.stopPropagation();
             },
-    
+            //查看版权详情
+//            see_copy_btn(){
+//                debugger
+//                var that = this
+//                console.log(this.goodsDetail.copyright_num);
+//                  let block_cert_numbere = that.goodsDetail.copyright_num;
+//
+//                 let   _p = {
+//                     block_cert_numbere
+//                    };
+//                debugger
+////                this.util.ajax.post('/admin/authCopyright/getCopyrightDataDetails.do',_p).then((e)=>{
+//                this.util.ajax.post('/admin/authCopyright/bq_change.do',_p).then((e)=>{
+//                    console.log(block_cert_numbere);
+//                    if(e.code == 200){
+//                        that.$router.push({
+//                            name: 'zheng_detail',
+//                            query: {
+//                                block_cert_numbere:that.goodsDetail.copyright_num
+//                            }
+//                        })
+//                    }
+//
+//                })
+//                event.stopPropagation();
+//                debugger
+//            },
+
+
+
+            //查看版权详情
+            see_copy_btn(){
+//                debugger;
+                var that = this;
+                that.number = '22A60CC41878924AA027555230B3716D'
+
+                that.util.ajax.get('/admin/authCopyright/getCopyrightDataDetails.do?number=22A60CC41878924AA027555230B3716D').then((e)=>{
+
+//                   debugger;
+                    if (e.code == 200){
+                        console.log("0000000000000000000000");
+                        console.log(e.data);
+                        that.$router.push({
+                            name: 'zheng_detail',
+                            query: {
+                                number:'22A60CC41878924AA027555230B3716D',
+                                block_cert_numbere:'22A60CC41878924AA027555230B3716D'
+                            }
+                        })
+
+                    }
+                });
+
+
+//                let block_cert_numbere = '22A60CC41878924AA027555230B3716D';
+//
+////                 let   _p = {
+////                     block_cert_numbere
+////                    };
+////                debugger
+//                that.util.ajax.get('/admin/authCopyright/bq_change.do?block_cert_numbere=22A60CC41878924AA027555230B3716D').then((e)=>{
+////                    console.log(block_cert_numbere);
+//                    if(e.code == 200){
+//                        that.$router.push({
+//                            name: 'zheng_detail',
+//                            query: {
+//                                block_cert_numbere:'22A60CC41878924AA027555230B3716D'
+//                            }
+//                        })
+//                    }
+//
+//                })
+
+                event.stopPropagation();
+//                debugger;
+            },
+
+
+
+
             // 评论
             go_evaluate(a) {
                 this.$router.push({

@@ -33,7 +33,7 @@
                                     <p class="font-1" v-else>商品价格¥{{it.money}}</p>
                                 </div>
                                 <div class="flex-1" v-if='it.state==1'>待付款</div>
-                                <div class="flex-1" v-else-if='it.state==2 && it.type==0'>待收获</div>
+                                <div class="flex-1" v-else-if='it.state==2 && it.type==0'>待发货</div>
                                 <div class="flex-1" v-else-if='it.state==2 && it.type==1'>待确认</div>
                                 <div class="flex-1" v-else-if='it.state==3 && it.type==0'>待收货</div>
                                 <div class="flex-1" v-else-if='it.state==3 && it.type==1'>变更中</div>

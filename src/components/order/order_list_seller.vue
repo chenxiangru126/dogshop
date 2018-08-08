@@ -40,10 +40,12 @@
                                 <div class="flex-1" v-if='it.state==1'>待付款</div>
                                 <div class="flex-1" v-else-if='it.state==2 && it.type==0'>待发货</div>
                                 <div class="flex-1" v-else-if='it.state==2 && it.type==1'>待确认</div>
-                                <div class="flex-1" v-else-if='it.state==3'>已发货</div>
+                                <div class="flex-1" v-else-if='it.state==3 && it.type==0'>待收货</div>
+                                <div class="flex-1" v-else-if='it.state==3 && it.type==1'>变更中</div>
                                 <div class="flex-1" v-else-if='it.state==4 && it.type==0' >待评价 </div>
                                 <div class="flex-1" v-else-if='it.state==4 && it.type==1' >取消出售 </div>
-                                <div class="flex-1" v-else-if='it.state==5'>已完成</div>
+                                <div class="flex-1" v-else-if='it.state==5 && it.type==0'>已完成</div>
+                                <div class="flex-1" v-else-if='it.state==5 && it.type==1'>已转让</div>
                                 <div class="flex-1" v-else-if='it.state==6'>已取消</div>
                                 <div class="flex-1" v-else-if='it.state==7'>待审核</div>
                                 <div class="flex-1" v-else-if='it.state==8'>待退货 </div>
@@ -246,12 +248,29 @@
             }, */
             yes_sell(a){
             //   先调用获取买家和卖家的id还有交易的证书编号
-                 debugger;  
+//                 debugger;
                 //  console.log(a)  
                 var that = this;
-                this.id = that.details.orderId
+                this.id = a.id
+//                let userId = a.userId
+//                let _p={
+//                    userId
+//                }
+//                debugger;
+//                this.util.ajax.post('http://songzhan.tunnel.qydev.com/admin/users/zyzhuce.do',_p).then((e)=>{
+//                    console.log(data)
+//                    debugger;
+//                    if(e.status == 1){
+//
+//                        that.Toast({
+//                        message:'请登录中云。。。。',
+//                    })
+//                    }else if(e.status == 0){
+//                        }
+//                })
+//                debugger;
               this.util.ajax.get('/mall/orders/getOrderDetail.do?id='+this.id).then((e)=>{
-                  debugger;
+//                  debugger;
                 if(e.code == 200){
                     //   let old_user_id = e.data.seller.sellerId
                       let old_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
@@ -269,7 +288,7 @@
                     }
                   
                 this.util.ajax.post('/admin/copyrightChange/save.do',_p).then((e)=>{
-                  debugger;
+//                  debugger;
                 if(e.code == 200){
                       let id  = this.id
                       let express_name =  ''
@@ -279,7 +298,7 @@
                       }
 
                       this.util.ajax.post('/mall/orders/editOrder.do',_p).then((e)=>{
-                          debugger;
+//                          debugger;
                          if(e.code == 200){
                              this.Toast('您已确认该版权售出')
                             this.state = 3
