@@ -7,13 +7,14 @@
            <img :src="url2" alt="">
      </div>
      <div class="content">
-         <p style="font-size:18px;color:#fff">变更信息</p>
-         <div class="change_content" v-for="(it,i) in changeDetail" :key="i">
-             <p class="change_date">{{it.createTime}}</p>
-             <p class="change_desc">由 {{it.new_realname}} 转让给 {{it.old_realname}}</p>
-         </div>
+
      </div>
      <div class="content">
+         <p class="content_title" style="font-size:18px;color:#fff">变更信息</p>
+         <div class="change_content" v-for="(it,i) in changeDetail" :key="i">
+             <!--<p class="change_date">{{it.createTime}}</p>-->
+             <p class="change_desc">{{it.createTime}}&nbsp&nbsp&nbsp{{it.new_realname}}转让给{{it.old_realname}}</p>
+         </div>
           <p style="margin-top:20px;font-size:14px">1、中云文化大数据科技有限公司简介</p>
           <p style="text-indent:1.5rem"><a  href="http://www.zhongyunwenhua.cn" style="text-decoration:none;color:#3F70AD;"> www.zhongyunwenhua.cn</a></p>
 
@@ -71,12 +72,12 @@ export default {
 
         })
 
-         let block_cert_numbere = this.$route.query.block_cert_numbere
-         this.block_cert_numbere = block_cert_numbere
-             let _b ={
-                 block_cert_numbere
-             }
-         this.util.ajax.get('/admin/authCopyright/bq_change.do?block_cert_numbere='+this.block_cert_numbere).then(e=> {
+//         var number = this.$route.query.number
+//         this.number = number
+//         var _b ={
+//                 number
+//             }
+         this.util.ajax.get('/admin/authCopyright/bq_change.do?number='+this.number).then(e=> {
              //获取url
              if (e.code == 200) {
                  this.changeDetail = e.data || {};

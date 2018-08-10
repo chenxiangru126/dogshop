@@ -156,6 +156,7 @@ const config = {
         '/admin/*': {
 
             target: 'http://songzhan.tunnel.qydev.com',
+            // target: 'http://59.110.169.175:8080',
 
             changeOrigin: true,
             secure: false

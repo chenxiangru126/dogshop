@@ -44,9 +44,9 @@
                 <div class="order-details-lib_b" style="margin-top:0.8rem" @click="go_goods_details">
                     <div class="order-details-lib_b_1 flex-h">
                         <div><img :src="goodsDetail.showUrl" alt=""></div>
-                        <div class="c3 flex-v flex-j-c flex-1">
+                        <div class="c3 flex-v flex-j-c flex-1" >
                             <p class="font-3 ellipsis">{{goodsDetail.goodsName}}</p>
-                            <p v-show="orderDetail.orderType==0 ? true:false">{{goodsDetail.shop_name}}</p>
+                            <p v-show="orderDetail.orderType==1 ? true:false">{{goodsDetail.shop_name}}</p>
                         </div>
     
                         <div class="flex-1 flex-v flex-j-c flex-a-e" v-if="state==2 && orderDetail.orderType==0" @click="send_goods_event">
@@ -61,8 +61,8 @@
                         <div class="flex-1 flex-v flex-j-c flex-a-e" v-if="state==0" @click="sure_get_goods">
                             <div class="lib-btn-2">确认收货</div>
                         </div>
-                        <div class="flex-1 flex-v flex-j-c flex-a-e" v-if="state==5 && orderDetail.orderType==1" @click="send_goods_event">
-                            <div class="lib-btn-2">查看版权信息</div>
+                        <div class="flex-1 flex-v flex-j-c flex-a-e" v-if="state==5 && orderDetail.orderType==1" @click="see_copy">
+                            <!--<div class="lib-btn-2">查看版权信息</div>-->
                         </div>
                         <div class="flex-1 flex-v flex-j-c flex-a-e" v-if="state==7" @click="go_audit">
                             <div class="lib-btn-2">去审核</div>
@@ -261,21 +261,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 暂不出售弹框 -->
-        <!-- <div class="dialog_layer" v-if="no_sell_show">
-            <div class="layer_cont_1"> -->
-                <!-- <div class="layer_cont_1">
-                    确定暂不出售该版权么？
-                </div> -->
-                <!-- <div class="layer_cont_btn">
-                    <div class="layer_cont_confirm flex-h flex-j-c">
-                        <p @click="banquan_cancel">取消</p>
-                        <p @click="seller_banquan">确定</p>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 </template>
 
@@ -357,12 +342,22 @@
             },
             go_goods_details() {
                 var that = this;
-                this.$router.push({
-                    path: 'goods-details-gwc',
-                    query: {
-                        id: that.goodsDetail.id
+                    if(that.state !== 5){
+                        this.$router.push({
+                            path: 'goods-details-gwc',
+                            query: {
+                                id: that.goodsDetail.id
+                            }
+                        })
                     }
-                })
+                    else if (that.state == 5){
+                        that.Toast({
+                            message:'该版权已转让',
+                            position:'bottom',
+                            className:'tt',
+                            duration:'3000'
+                        })
+                    }
             },
             // 去审核
             go_audit() {
@@ -379,7 +374,9 @@
                 this.send_goods_show = true;
                 event.stopPropagation();
             },
+            see_copy(){
 
+            },
             //暂不出售，
             no_sell(a){
                 // debugger;
@@ -414,12 +411,13 @@
              //确认出售
             yes_sell(a){
             //   先调用获取买家和卖家的id还有交易的证书编号
-                //  debugger;  
+                  debugger;
                 //  console.log(a)  
                var that = this;
                this.id = that.details.orderId
+
               this.util.ajax.get('/mall/orders/getOrderDetail.do?id='+this.id).then((e)=>{
-                //   debugger;
+                   debugger;
                 if(e.code == 200){
 //                       let old_user_id = e.data.seller.sellerId
                       let old_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
@@ -435,7 +433,7 @@
                        new_user_id,
                        block_cert_numbere
                     }
-                  
+
                 this.util.ajax.post('/admin/copyrightChange/save.do',_p).then((e)=>{
                 //   debugger;
                 if(e.code == 200){
@@ -450,7 +448,8 @@
                         //   debugger;
                          if(e.code == 200){
                              this.Toast('您已确认该版权售出')
-                            this.state = 3
+//                            this.state = 3
+                             this.initData();
 
                          }
 
@@ -468,15 +467,7 @@
            
             event.stopPropagation()
             },
-        
-            // //确认出售弹窗 点击取消按钮时的状态
-            // banquan_cancel(){
-            //     this.no_sell_show = false;
-            // },
-            // //确认出售弹窗 点击确认按钮时的状态
-            // seller_banquan(){
-            //     this.no_sell_show = false;
-            // },
+
             //发货信息取消
             send_goods_cancel() {
                 this.send_goods_show = false;

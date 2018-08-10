@@ -12,7 +12,7 @@ const copyright = [{
         path: '/zheng_detail',
         name: 'zheng_detail',
         meta: {
-            title: "订单详情"
+            title: "版权证书"
         },
         components: {
             default: resolve => require(['../../components/zheng_detail/zheng_detail.vue'], resolve),

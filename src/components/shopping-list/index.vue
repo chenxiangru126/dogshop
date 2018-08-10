@@ -13,7 +13,7 @@
          </div>
         
          <div class="d_but" v-show="butdisplay">
-                <p>   总计   ¥ {{total}} <span @click="settlement">结 算</span></p>
+                <p>   总计   ¥ {{total.toFixed(2)}} <span @click="settlement">结 算</span></p>
          </div>
     </div>
 </template>
@@ -50,6 +50,7 @@ import list from './list.vue';
         //         that.initData()
         //    }, 450);
             this.userGetinfo();
+            this.initData()
             // if(location.href.indexOf('localhost')>-1){
             //     this.initData()
             // }

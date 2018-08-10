@@ -6,11 +6,10 @@
         <img @click="ser_on" src="../../static/images/ssss-ios.png" />
     </div>
  <mt-swipe :auto="3000">
-  <mt-swipe-item v-for="(item,m) in items" :key="m">
+  <mt-swipe-item v-for="item in items" :key="item">
   <!-- <a :href="item.href" rel="external nofollow" > -->
   <!-- <img src="../../static/images/1527777706210.jpg" class="sw_img"/> -->
-   <img  :src="item.url" v-if="item.iswht" class="sw_img" style="width: 100%;margin:8% auto;display: block;" @click="opimg(item.url)"/>
-   <img  :src="item.url" v-else class="sw_img" style="height: 100%;margin:0 auto;display: block;" @click="opimg(item.url)"/>
+   <img  :src="item" class="sw_img" style="height: 100%;margin:0 auto;display: block;" @click="opimg(item)"/>
    <span class="desc"></span>
   <!-- </a> -->
   </mt-swipe-item>
@@ -67,7 +66,7 @@
                     <div class="content">
                         <p>{{it.content}}</p>
                         <p class="con_img">
-                            <img v-for="(n,l) in it.urls" :key='l'  @click="opimg(n)"  v-bind:src="n"/>
+                            <img v-for="n in it.urls" :key='n'  @click="opimg(n)"  v-bind:src="n"/>
                             
                         </p>
                         <p class="operation"><span @click="like(it)" :class="it.myDianzhan==1?'give_like':'give_like1'">{{it.dianzanCount}}</span><span class="message">{{it.pinglunCount}}</span></p>
@@ -83,15 +82,15 @@
         <div class="dialog_layer" @click="dia_la"  v-show="share" >
        
         </div>
-         <!-- <div class="share" v-show="share">
+         <div class="share" v-show="share">
             <div class="share_m">
                 <p><span></span><label>分享到</label><span></span></p>
                 <div class="share_i"><img @click="share_on" src="../../static/images/circle@3x.png"/><img @click="share_on" src="../../static/images/wechat@3x.png"/>
                     <img @click="share_on" src="../../static/images/qq4x@3x.png"/><img @click="share_on" src="../../static/images/weibo@3x.png"/></div>
             </div>
-        </div> -->
+        </div>
     </div>
-      <thickness :num=number v-if="dialog" :id=id :isShare=isShare></thickness>
+      <thickness :num=number v-if="dialog" :id=id :isShare=isShare ></thickness>
  </div>
 </template>
 
@@ -117,7 +116,6 @@
  import base64 from "../../libs/base64";
  import {_alert,_confrim,_openimg} from '../../libs/ui';
  import thickness from './thickness.vue';
- import axios from 'axios';
  export default {
  components: {
   'mt-swipe': Swipe,
@@ -147,77 +145,57 @@
      created() {
          this.id = 	this.$route.query.id;
          this.isShare = this.$route.query.isShare==1?false:true;
-         this.initData();
-     },
+         if(/localhost/.test(location.href)){
+             this.initData();
+         }else{
+               this.userGetinfo();
+         }
+        },
     methods: {
-        initData(){
-            let _this =this;
-            let data ={id:this.id,token: "",
-                    userId: "",
-                    mobile: ''};
-            axios.post("/mall/goods/getById.do",data).then(res=>{
-                let e = res.data;
-                if(e.code==200){
-                    this.goodsInfo = e.data.goods;
-                    for(let i in e.data.goods.tags){
-                        this.tags+=e.data.goods.tags[i]+'; '
+         userGetinfo(){
+            var _this = this;
+            setTimeout(function(){
+                try{
+                    let objdata = iosObject.getUserInfo();
+                    let jsondata = eval('(' + objdata + ')');
+                    window.jsondata = jsondata;
+                    if(window.jsondata.token){
+                        _this.initData();
+                    }else{
+                        _this.userGetinfo();
                     }
-                    for(let n in e.data.goods.urlShow){
-                        let img = new Image();
-                        img.src = e.data.goods.urlShow[n];
-                        img.onload = function(){
-                        let iswht = Number(img.width) > Number(img.height*2)?true:false;
-                            _this.items.push({url:e.data.goods.urlShow[n],iswht:iswht});
-                        };
-                    }
+                }catch(e){
+                    _this.userGetinfo();
                 }
-                
+            },300)
+        },
+        initData(){
+            let data ={id:this.id}
+            util.ajax.post("/mall/goods/getById.do",data).then(e=>{
+                this.goodsInfo = e.data.goods;
+                for(let i in e.data.goods.tags){
+                    this.tags+=e.data.goods.tags[i]+'; '
+                }
+                this.items = e.data.goods.urlShow;
             }).catch()
             this.initList();
         },
         //评价
         initList(){
-            let data ={id:this.id,token: "",userId: "", mobile: ''};
-            axios.post("/mall/comments/getComments.do",data).then(res=>{
-                let e = res.data;
-                if(e.code == 200){
-                    for(let i in e.data.list){
-                        let r = e.data.list[i].score.split('.');
-                        e.data.list[i].numzs = Number(r[0])+1 ;
-                        e.data.list[i].numxs = Number(r[1])||0;
-                    }
-                    this.evaluationNum = e.data.list.length;
-                    this.evaluation = e.data.list;
-                }
-                
-            }).catch()
+            util.ajax.post("/mall/comments/getComments.do",{goodsId:this.id}).then(e=>{
+                for(let i in e.data.list){
+                    let r = e.data.list[i].score.split('.');
+                    e.data.list[i].numzs = Number(r[0])+1 ;
+                    e.data.list[i].numxs = Number(r[1])||0;
 
+                }
+                this.evaluationNum = e.data.list.length;
+                this.evaluation = e.data.list;
+            }).catch()
         },
         user_action(a){
-            let _t = this;
-            this.userGetinfo(function(){
-                _t.usr_t = a;
-                _t.dialog = true;
-            })
-        },
-        userGetinfo(fun){
-            if(location.href.indexOf('localhost')>-1){
-                return true;
-            }
-            var _this = this;
-            let objdata = iosObject.getUserInfo();
-            let jsondata = eval('(' + objdata + ')');
-            window.jsondata = jsondata;
-            axios.post("/mall/address/isHaveToken.do",{token:window.jsondata.token}).then(res=>{
-                let e = res.data;
-                if(e.code!=200){
-                    iosObject.goLogin();
-                    return false;
-                }else{
-                     fun();
-                     return true;
-                }
-            }).catch();
+           this.usr_t = a;
+           this.dialog = true
         },
         Place_order(type){
             this.dialog = false;
@@ -233,20 +211,15 @@
                  type:type?'1':'0'
                  }
             util.ajax.post(url,data).then(e=>{
-                if(e.code==200){
-                    if(this.usr_t==2){
-                        this.$router.push({path: '/order_create',query:{ id:this.goodsInfo.id,type:type?'1':'0',count:type?'1':this.number}});  
-                    }else{
-                        this.Toast('加入成功！');
-                    }
+                if(this.usr_t==2){
+                   this.$router.push({path: '/order_create',query:{ id:this.goodsInfo.id,type:type?'1':'0',count:type?'1':this.number}});  
+                }else{
+                    this.Toast('加入成功！');
                 }
             }).catch()
         },
         to_gwc(){
-            let _t = this;
-            this.userGetinfo(function(){
-                _t.$router.push({path: '/shopping-list'});
-            })
+            this.$router.push({path: '/shopping-list'});
         },
         ser_on(){
             let ur = '/index.html#/goods-details-gwc?id='+this.goodsInfo.id+'&isShare=1';
@@ -266,31 +239,34 @@
             _openimg(e);
          },
         gostore(id){
-            let _t = this;
-            this.userGetinfo(function(){
-               iosObject.toFriendMainPage(id);
-            })
+                iosObject.toFriendMainPage(id);
+            },
+        share_on(){
+            // let ur = '/goods-details-gwc?id='+goodsInfo.id;
+            // let str = base64.base64encode(ur);
+            // let url ='http://yddwechat.bjyishubiyeji.com/mall/toGoodsShareUrl/usl/'+str
+            // alert("base64 encode:" + str);
+                //解密
+            //    let str1 = base64.base64decode(str);
+            //     alert("base64 decode:" + str1);
+            // iosObject.shareContentTitlePicUrl(goodsInfo.goodsDescribe,goodsInfo.goodsName,goodsInfo.sharePhoto,url);
+            //  this.share = !this.share;
         },
         like(a){
             util.ajax.post("/mall/goodscomment_dianzan/dianzan.do",{goodscommentId:a.id}).then(e=>{
-                if(e.code==200){
-                    if(a.myDianzhan ==0){
-                        a.dianzanCount--;
-                        a.myDianzhan = 1;
-                        this.Toast('取消点赞！');
-                    }else{
-                        a.dianzanCount++;
-                        a.myDianzhan = 0;
-                        this.Toast('点赞成功！');
-                    } 
-                } 
+                 if(a.myDianzhan ==0){
+                     a.dianzanCount--;
+                     a.myDianzhan = 1;
+                     this.Toast('取消点赞！');
+                 }else{
+                     a.dianzanCount++;
+                     a.myDianzhan = 0;
+                     this.Toast('点赞成功！');
+                 } 
             }).catch()
         },
         contact(){
-            let _t = this;
-            this.userGetinfo(function(){
-                iosObject.toChatVC(_t.goodsInfo.userId);
-            })
+            iosObject.toChatVC(this.goodsInfo.userId);
         }
     }
  }

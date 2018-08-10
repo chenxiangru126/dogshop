@@ -390,11 +390,12 @@
                 that.number = '22A60CC41878924AA027555230B3716D'
 
                 that.util.ajax.get('/admin/authCopyright/getCopyrightDataDetails.do?number=22A60CC41878924AA027555230B3716D').then((e)=>{
+//                    debugger;
+                    console.log(e.data);
 
-//                   debugger;
                     if (e.code == 200){
                         console.log("0000000000000000000000");
-                        console.log(e.data);
+
                         that.$router.push({
                             name: 'zheng_detail',
                             query: {
