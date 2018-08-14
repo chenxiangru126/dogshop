@@ -1,13 +1,15 @@
 <template>
     <div class="lib_b_1"  @touchstart="touch_start"  @touchmove="touch_move"  @touchend="touch_end" :style="txtStyle" >
-            <div class="lib_b_1_c "    :class="item.check?'lib-unselected':'lib-selected'" >
+            <div class="lib_b_1_c "    :class="item.check?'lib-unselected':'lib-selected'"  @click="select_event(it)">
                 <div class="transparent"  @click="click_tag(item)"></div>
                 <div class="line"></div>
                 <p class="shop_name" @click="tostore(item.friendsId)"><span>{{item.shop_name}}</span> <em></em></p>
                 <div class="shop_info" @click="toGoodsDes($event,item.goodsId)">
                     <div class="div_2">
                         <p class="font-2 c1 shop_n">{{item.goodsName}}</p>
-                        <p class="c9  h2 line-h-2 shop_pic" :class="item.type==0?'shop_pic_cl':'shop_pic_cl2'"><span style="font-size: .933333rem">￥</span>{{item.price}}/个 * {{item.count}}<span v-if="item.type==1">(版权)</span></p>
+                        <p class="c9  h2 line-h-2 shop_pic" :class="item.type==0?'shop_pic_cl':'shop_pic_cl2'">
+                            <span style="font-size: .933333rem">￥</span>{{item.price}}/个 * {{item.count}}
+                            <span v-if="item.type==1">(版权)</span></p>
                     </div>
                     <img class="shop_img" v-bind:src="item.imgUrl">
                 </div>
@@ -32,7 +34,7 @@ import util from "../../libs/util";
                 delWidth: 80
             }
         },
-         props: ['item'],
+         props: ['item','it'],
         methods: {
         
             touch_start(ev) {
@@ -103,11 +105,14 @@ import util from "../../libs/util";
                              that.$parent.butdisplay = false;
                              that.$parent.emptylist = true;
                         }
-                        // setTimeout(()=>{
-                            // var index =  that.$parent.list.indexOf(that.item);
-                            // that.$parent.list = [];
-                            //  that.$parent.list.splice(index, 1);
-                            // that.$parent.initData();
+                        setTimeout(()=>{
+                            var index =  that.$parent.list.indexOf(that.item);
+                            that.$parent.list = [];
+                             that.$parent.list.splice(index, 1);
+                            that.$parent.initData();
+                        },1000)
+                        //  setTimeout(()=>{
+                        //     that.$parent.initData();
                         // },1000)
                     }
                    
@@ -121,10 +126,10 @@ import util from "../../libs/util";
             },
             click_tag(item){
                 if(item.check){
-                    this.$parent.total = this.$parent.total+item.count*item.price;
+                    this.$parent.total = Math.abs(this.$parent.total+item.count*item.price);
                     this.$parent.ids.push(item.id);
                 }else{
-                    this.$parent.total = this.$parent.total-item.count*item.price;
+                    this.$parent.total =Math.abs( this.$parent.total-item.count*item.price);
                      var index = this.$parent.ids.indexOf(item.id);
                      this.$parent.ids.splice(index, 1);
                 }
@@ -135,6 +140,16 @@ import util from "../../libs/util";
                     this.$router.push({path: '/goods-details-gwc',query:{ id:id}});
                 }
                 
+            },
+            select_event(a){
+                let select_status=this.$parent.select_status;
+                if(!select_status){
+                     a.check=!a.check;
+                     this.$parent.select_shopping_send(a)
+                }else{
+                    a.check=!a.check;
+                }
+               
             }
         }
     }

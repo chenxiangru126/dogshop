@@ -409,63 +409,72 @@
             }, 
             
              //确认出售
-            yes_sell(a){
+            yes_sell(){
             //   先调用获取买家和卖家的id还有交易的证书编号
-                  debugger;
-                //  console.log(a)  
+//                  debugger;
+                //  console.log(a)
                var that = this;
+                that.userId = that.details.buyer.buyerId
                this.id = that.details.orderId
+                console.log(that.details);
+                event.stopPropagation();
+                alert('000000000')
+                this.util.ajax.get('/admin/users/zyzhuce.do?userId='+that.userId).then((e)=>{
+//                    debugger;
+                    console.log('11111111：'+e.data.status);
 
-              this.util.ajax.get('/mall/orders/getOrderDetail.do?id='+this.id).then((e)=>{
-                   debugger;
-                if(e.code == 200){
+                    if(e.data.status == 1){
+                        this.util.ajax.get('/mall/orders/getOrderDetail.do?id='+this.id).then((e)=>{
+//                            debugger;
+                            event.stopPropagation();
+                            if(e.code == 200){
 //                       let old_user_id = e.data.seller.sellerId
-                      let old_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
-                    //   let new_user_id = e.data.buyer.buyerId
-                      let new_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
+                                let old_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
+//                       let new_user_id = e.data.buyer.buyerId
+                                let new_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
 
-                    //   let block_cert_numbere  = e.data.goodsDetail.copyright_num
-                      let  block_cert_numbere = '22A60CC41878924AA027555230B3716D'
-                      console.log('old_user_id'+old_user_id,'new_user_id'+new_user_id,'block_cert_numbere'+block_cert_numbere)
+//                       let block_cert_numbere  = e.data.goodsDetail.copyright_num
+                                let  block_cert_numbere = '22A60CC41878924AA027555230B3716D'
+                                console.log('old_user_id'+old_user_id,'new_user_id'+new_user_id,'block_cert_numbere'+block_cert_numbere)
 
-                      let _p ={
-                       old_user_id,
-                       new_user_id,
-                       block_cert_numbere
+                                let _p ={
+                                    old_user_id,
+                                    new_user_id,
+                                    block_cert_numbere
+                                }
+//                                debugger;
+                                this.util.ajax.post('/admin/copyrightChange/save.do',_p).then((e)=>{
+//                                    debugger;
+                                    if(e.code == 200){
+                                        let id  = this.id
+                                        let express_name =  ''
+                                        let _p ={
+                                            id,
+                                            express_name
+                                        }
+//                                        debugger;
+                                        this.util.ajax.post('/mall/orders/editOrder.do',_p).then((e)=>{
+//                                            debugger;
+                                            if(e.code == 200){
+                                                this.Toast('您已确认该版权售出')
+//                                                this.state = 3
+                                                this.initData();
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }else if(e.data.status == 0){
+
+                        that.Toast({
+                            message:'您还未申请版权登记，请去申请版权登记证书',
+                        })
+
                     }
-
-                this.util.ajax.post('/admin/copyrightChange/save.do',_p).then((e)=>{
-                //   debugger;
-                if(e.code == 200){
-                      let id  = this.id
-                      let express_name =  ''
-                      let _p ={
-                         id,
-                        express_name
-                      }
-
-                      this.util.ajax.post('/mall/orders/editOrder.do',_p).then((e)=>{
-                        //   debugger;
-                         if(e.code == 200){
-                             this.Toast('您已确认该版权售出')
-//                            this.state = 3
-                             this.initData();
-
-                         }
-
-                      })
-
-
-                }
-
                 })
-
-
-                }
-
-              })
-           
-            event.stopPropagation()
+//                event.stopPropagation();
+//                debugger;
             },
 
             //发货信息取消

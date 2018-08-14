@@ -24,6 +24,23 @@
                 <div class="page-infinite-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }" v-if="items.length>0">
                     <ul class="page-infinite-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
                         <div class="order-lib_b" :class="(it.state==7||it.state==8||it.state==9)?'tuihuo-icon':''" v-for="it in items" :key='it.id'>
+                            <div class="flex-1 top_1" v-if='it.state==1'>待付款</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==2 && it.type==0'>待发货</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==2 && it.type==1'>待确认</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==3 && it.type==0'>待收货</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==3 && it.type==1'>变更中</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==4 && it.type==1'>取消出售</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==4 && it.type==0'>待评价 </div>
+                            <div class="flex-1 top_1" v-else-if='it.state==5 && it.type==0' >已完成</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==5 && it.type==1'>查看版权信息</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==6'>已取消</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==7'>待处理</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==8'>待退货 </div>
+                            <div class="flex-1 top_1" v-else-if='it.state==9||it.state==13'>已拒绝</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==10'>待退款</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==11'>退款成功</div>
+                            <div class="flex-1 top_1" v-else-if='it.state==12'>重新申请</div>
+                            <p class="line_1"></p>
                             <p class="c2 font-1">{{it.shop_name?it.shop_name:'商店名称'}}</p>
                             <div class="order-lib_b_1 flex-h" @click='go_details(it)'>
                                 <div><img :src="it.imgUrl" alt=""></div>
@@ -32,23 +49,8 @@
                                     <p class="font-1 c12" v-if='it.type==1'>¥{{it.money}}</p>
                                     <p class="font-1" v-else>商品价格¥{{it.money}}</p>
                                 </div>
-                                <div class="flex-1" v-if='it.state==1'>待付款</div>
-                                <div class="flex-1" v-else-if='it.state==2 && it.type==0'>待发货</div>
-                                <div class="flex-1" v-else-if='it.state==2 && it.type==1'>待确认</div>
-                                <div class="flex-1" v-else-if='it.state==3 && it.type==0'>待收货</div>
-                                <div class="flex-1" v-else-if='it.state==3 && it.type==1'>变更中</div>
-                                <div class="flex-1" v-else-if='it.state==4 && it.type==1'>取消出售</div>
-                                <div class="flex-1" v-else-if='it.state==4 && it.type==0'>待评价 </div>
-                                <div class="flex-1" v-else-if='it.state==5 && it.type==0' >已完成</div>
-                                 <div class="flex-1" v-else-if='it.state==5 && it.type==1'>查看版权信息</div>
-                                <div class="flex-1" v-else-if='it.state==6'>已取消</div>
-                                <div class="flex-1" v-else-if='it.state==7'>待处理</div>
-                                <div class="flex-1" v-else-if='it.state==8'>待退货 </div>
-                                <div class="flex-1" v-else-if='it.state==9||it.state==13'>已拒绝</div>
-                                <div class="flex-1" v-else-if='it.state==10'>待退款</div>
-                                <div class="flex-1" v-else-if='it.state==11'>退款成功</div>
-                                <div class="flex-1" v-else-if='it.state==12'>重新申请</div>
                             </div>
+                            <p class="line_2"></p>
                             <div class="lib-btn-1" @click='go_pay(it)' v-if='it.state==1'>付款</div>
                             <!-- <div class="lib-btn-1" @click='send_goods(it)' v-else-if='it.state==2'>一键发货</div> -->
                             <div class="lib-btn-1" @click='sure_get_goods(it)' v-else-if='it.state==3 && it.type==0'>确认收货</div>
@@ -56,6 +58,7 @@
                             <div class="lib-btn-1" @click='cancel_refund(it)' v-else-if='it.state==7'>取消退款</div>
                             <div class="lib-btn-1" @click='send_goods_event(it)' v-else-if='it.state==8'>填写物流单号</div>
                             <div class="lib-btn-1" @click='apply_again(it)' v-else-if='it.state==9'>重新申请</div>
+
                         </div>
                     </ul>
                     <p v-show="loading&&!null_data" class="page-infinite-loading font-1 c1">
@@ -98,6 +101,20 @@
 
 <style lang="less">
     @import 'order_list.less';
+    .line_1{
+        width: 100%;
+        height: .066667rem;
+        background: rgba(216,216,216,0.19);
+        transform: scale(1,0.5);
+        margin-top: 0.32rem;
+    }
+    .line_2{
+        width: 100%;
+        height: .066667rem;
+        background: rgba(216,216,216,0.19);
+        transform: scale(1,0.5);
+        margin-bottom: 2.5625rem;
+    }
 </style>
 
 <script>

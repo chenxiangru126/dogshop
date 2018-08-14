@@ -40,7 +40,7 @@
                                 <div class="flex-1" v-if='it.state==1'>待付款</div>
                                 <div class="flex-1" v-else-if='it.state==2 && it.type==0'>待发货</div>
                                 <div class="flex-1" v-else-if='it.state==2 && it.type==1'>待确认</div>
-                                <div class="flex-1" v-else-if='it.state==3 && it.type==0'>待收货</div>
+                                <div class="flex-1" v-else-if='it.state==3 && it.type==0'>已发货</div>
                                 <div class="flex-1" v-else-if='it.state==3 && it.type==1'>变更中</div>
                                 <div class="flex-1" v-else-if='it.state==4 && it.type==0' >待评价 </div>
                                 <div class="flex-1" v-else-if='it.state==4 && it.type==1' >取消出售 </div>
@@ -279,7 +279,7 @@
                                     new_user_id,
                                     block_cert_numbere
                                 }
-
+//                                debugger;
                                 this.util.ajax.post('/admin/copyrightChange/save.do',_p).then((e)=>{
 //                                    debugger;
                                     if(e.code == 200){
@@ -289,8 +289,9 @@
                                             id,
                                             express_name
                                         }
+//                                        debugger;
                                         this.util.ajax.post('/mall/orders/editOrder.do',_p).then((e)=>{
-//                                            debugger;
+                                            debugger;
                                             if(e.code == 200){
                                                 this.Toast('您已确认该版权售出')
 //                                                this.state = 3
@@ -309,47 +310,6 @@
 
                         }
                 })
-//                debugger;
-//              this.util.ajax.get('/mall/orders/getOrderDetail.do?id='+this.id).then((e)=>{
-//                  debugger;
-//                if(e.code == 200){
-////                       let old_user_id = e.data.seller.sellerId
-//                      let old_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
-////                       let new_user_id = e.data.buyer.buyerId
-//                      let new_user_id  ='59d31948-8260-4707-8d86-2759e2bd71bd'
-//
-////                       let block_cert_numbere  = e.data.goodsDetail.copyright_num
-//                      let  block_cert_numbere = '22A60CC41878924AA027555230B3716D'
-//                      console.log('old_user_id'+old_user_id,'new_user_id'+new_user_id,'block_cert_numbere'+block_cert_numbere)
-//
-//                      let _p ={
-//                       old_user_id,
-//                       new_user_id,
-//                       block_cert_numbere
-//                    }
-//
-//                this.util.ajax.post('/admin/copyrightChange/save.do',_p).then((e)=>{
-//                  debugger;
-//                if(e.code == 200){
-//                      let id  = this.id
-//                      let express_name =  ''
-//                      let _p ={
-//                         id,
-//                        express_name
-//                      }
-//                      this.util.ajax.post('/mall/orders/editOrder.do',_p).then((e)=>{
-//                          debugger;
-//                         if(e.code == 200){
-//                             this.Toast('您已确认该版权售出')
-//                            this.state = 3
-//                         }
-//                      })
-//                }
-//                })
-//                }
-//              })
-
-
             },
             //选择状态查询
             handle_state(a) {

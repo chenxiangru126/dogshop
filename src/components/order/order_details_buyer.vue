@@ -388,11 +388,11 @@
 //                debugger;
                 var that = this;
                 that.number = '22A60CC41878924AA027555230B3716D'
-
+//                    alert("1")
                 that.util.ajax.get('/admin/authCopyright/getCopyrightDataDetails.do?number=22A60CC41878924AA027555230B3716D').then((e)=>{
 //                    debugger;
                     console.log(e.data);
-
+//                    alert("2")
                     if (e.code == 200){
                         console.log("0000000000000000000000");
 
@@ -407,7 +407,9 @@
                     }
                 });
 
-
+                event.stopPropagation();
+//                debugger;
+            },
 //                let block_cert_numbere = '22A60CC41878924AA027555230B3716D';
 //
 ////                 let   _p = {
@@ -427,9 +429,7 @@
 //
 //                })
 
-                event.stopPropagation();
-//                debugger;
-            },
+
 
 
 
