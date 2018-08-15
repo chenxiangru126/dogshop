@@ -18,7 +18,7 @@ const register = [{
     },
     components: {
         default: resolve => require(['../../components/register/register1.vue'], resolve),
-        
+        headers: resolve => require(['../../components/common/header.vue'], resolve)
     }
 },
 {

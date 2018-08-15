@@ -44,6 +44,8 @@
             }
         },
               mounted() {
+                  //判断是否缴纳金额
+
                 //  读取query的值，然后做出判断
                 const model = this.$route.query.model
                 if(model){

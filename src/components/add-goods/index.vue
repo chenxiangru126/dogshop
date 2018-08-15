@@ -291,6 +291,10 @@ import {_alert,_confrim,_openimg} from '../../libs/ui';
                 this.Toast('请填写商品价格');
                 return false;
             }
+            if(this.price==''&&this.copyright_price==''){
+                this.Toast('请填写商品价格或版权价格');
+                return false;
+            }
             //  if( this.copyright_price==''){
             //     this.Toast('请填写版权价格');
             //     return false;

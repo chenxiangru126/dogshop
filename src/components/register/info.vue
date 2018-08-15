@@ -85,8 +85,18 @@ export default {
         }
     },
     created() {
+//        this.util.ajax.post("/mall/shopauthentication/getPayStatus.do").then(e=>{
+//            if(e.data.isPay != 2){
+//                this.$router.push({path: '/register1?shoptype=1'});
+//            }
+//        })
     },
     mounted(){
+
+
+
+
+
         let model   = this.$route.query.model
         let shoptype = this.$route.query.shoptype
         let shop_type_id = this.$route.query.shop_type_id
@@ -107,7 +117,7 @@ export default {
 
         setTimeout(()=>{
             this.util.ajax.post('/mall/shopauthentication/getShopType.do').then(e=>{
-                debugger;
+//                debugger;
                 if(e.code ==200){
                     this.model= e.data.model
                     this.shoptype = e.data.shoptype

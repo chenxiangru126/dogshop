@@ -54,7 +54,8 @@ import util from '../../libs/util'
 export default {
     data(){
         return{
-          number :null, 
+          number :null,
+          block_cert_numbere:null,
           url1:null,
           url2:null,
           b_url:null,
@@ -64,21 +65,27 @@ export default {
     },
      created(){
       // 请求申请成功显示证书
-
+         debugger;
         let number = this.$route.query.number
-        this.number = number
+        let block_cert_numbere = this.$route.query.block_cert_numbere
+        this.block_cert_numbere = number
         let _p ={
-            number
+            block_cert_numbere
         }
+         debugger;
         this.util.ajax.post('/admin/authCopyright/getCopyrightDataDetails.do',_p).then(e=>{
           //获取url
+            console.log(e);
           if(e.code == 200){
+              console.log(e.data);
                this.url1 = e.data.c_url1
               this.url2 = e.data.c_url2
               this.b_url = e.data.b_url
+              console.log(this.url1);
           };
 
         })
+         debugger;
 
 //         var number = this.$route.query.number
 //         this.number = number
@@ -86,16 +93,19 @@ export default {
 //                 number
 //             }
 //         alert("3")
+         this.number = number
          this.util.ajax.get('/admin/authCopyright/bq_change.do?number='+this.number).then(e=> {
              //获取url
-//             alert("4")
+//
              if (e.code == 200) {
+                 alert("111111111111")
                  this.changeDetail = e.data || {};
              }
          })
     }
     
 }
+//            debugger;
 </script>
 <style lang="less">
 @import 'zheng_detail.less';

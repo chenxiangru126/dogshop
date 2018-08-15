@@ -145,22 +145,30 @@ const config = {
           changeOrigin: true,
           secure: false
       },
+        '/mall/*': {
+            // target: 'http://test.bjyishubiyeji.com',
+            // target: 'http://yddwechat.bjyishubiyeji.com',
+            target: 'http://test.bjyishubiyeji.com',
+            changeOrigin: true,
+            secure: false
+        },
       '/admin/*': {
         // target: 'http://xiaoceshi.tunnel.qydev.com',
         // target: 'http://59.110.169.175:8080',
         target: 'http://test.bjyishubiyeji.com:8080',
         // target: 'https://yddwechat.bjyishubiyeji.com:8443',
+        //   target: 'http://songzhan.tunnel.qydev.com',
         changeOrigin: true,
         secure: false
         } ,
-        '/admin/*': {
-
+        // '/admin/*': {
+        //
             // target: 'http://songzhan.tunnel.qydev.com',
             //
-            target: 'http://test.bjyishubiyeji.com:8080',
-            changeOrigin: true,
-            secure: false
-        }
+        //     target: 'http://test.bjyishubiyeji.com:8080',
+        //     changeOrigin: true,
+        //     secure: false
+        // }
     }
   }
 

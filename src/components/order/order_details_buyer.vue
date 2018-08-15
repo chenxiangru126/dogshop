@@ -353,33 +353,7 @@
                 })
                 event.stopPropagation();
             },
-            //查看版权详情
-//            see_copy_btn(){
-//                debugger
-//                var that = this
-//                console.log(this.goodsDetail.copyright_num);
-//                  let block_cert_numbere = that.goodsDetail.copyright_num;
-//
-//                 let   _p = {
-//                     block_cert_numbere
-//                    };
-//                debugger
-////                this.util.ajax.post('/admin/authCopyright/getCopyrightDataDetails.do',_p).then((e)=>{
-//                this.util.ajax.post('/admin/authCopyright/bq_change.do',_p).then((e)=>{
-//                    console.log(block_cert_numbere);
-//                    if(e.code == 200){
-//                        that.$router.push({
-//                            name: 'zheng_detail',
-//                            query: {
-//                                block_cert_numbere:that.goodsDetail.copyright_num
-//                            }
-//                        })
-//                    }
-//
-//                })
-//                event.stopPropagation();
-//                debugger
-//            },
+
 
 
 
@@ -387,47 +361,19 @@
             see_copy_btn(){
 //                debugger;
                 var that = this;
-                that.number = '22A60CC41878924AA027555230B3716D'
-//                    alert("1")
-                that.util.ajax.get('/admin/authCopyright/getCopyrightDataDetails.do?number=22A60CC41878924AA027555230B3716D').then((e)=>{
-//                    debugger;
-                    console.log(e.data);
-//                    alert("2")
-                    if (e.code == 200){
-                        console.log("0000000000000000000000");
-
-                        that.$router.push({
-                            name: 'zheng_detail',
-                            query: {
-                                number:'22A60CC41878924AA027555230B3716D',
-                                block_cert_numbere:'22A60CC41878924AA027555230B3716D'
-                            }
-                        })
-
+                let number  = '22A60CC41878924AA027555230B3716D'
+                let  block_cert_numbere='22A60CC41878924AA027555230B3716D'
+                that.$router.push({
+                    name: 'zheng_detail',
+                    query: {
+                        number:'22A60CC41878924AA027555230B3716D',
+                        block_cert_numbere:'22A60CC41878924AA027555230B3716D'
                     }
-                });
+                })
 
                 event.stopPropagation();
 //                debugger;
             },
-//                let block_cert_numbere = '22A60CC41878924AA027555230B3716D';
-//
-////                 let   _p = {
-////                     block_cert_numbere
-////                    };
-////                debugger
-//                that.util.ajax.get('/admin/authCopyright/bq_change.do?block_cert_numbere=22A60CC41878924AA027555230B3716D').then((e)=>{
-////                    console.log(block_cert_numbere);
-//                    if(e.code == 200){
-//                        that.$router.push({
-//                            name: 'zheng_detail',
-//                            query: {
-//                                block_cert_numbere:'22A60CC41878924AA027555230B3716D'
-//                            }
-//                        })
-//                    }
-//
-//                })
 
 
 

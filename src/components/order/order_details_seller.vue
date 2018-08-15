@@ -342,7 +342,7 @@
             },
             go_goods_details() {
                 var that = this;
-                    if(that.state !== 5){
+                    if(that.state !== 5 ){
                         this.$router.push({
                             path: 'goods-details-gwc',
                             query: {
@@ -350,7 +350,7 @@
                             }
                         })
                     }
-                    else if (that.state == 5){
+                    else if (that.state == 5 && that.orderDetail.orderType==1){
                         that.Toast({
                             message:'该版权已转让',
                             position:'bottom',
