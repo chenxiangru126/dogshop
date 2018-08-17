@@ -50,6 +50,7 @@ import util from "../../libs/util";
     
             },
             touch_move(ev) {
+
                 ev = ev || event;
                 if (ev.touches.length == 1) {
                     // 滑动过程中的实时位置

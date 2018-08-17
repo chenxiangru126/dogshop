@@ -77,6 +77,7 @@ export default {
           //获取url
             console.log(e);
           if(e.code == 200){
+              debugger;
               console.log(e.data);
                this.url1 = e.data.c_url1
               this.url2 = e.data.c_url2
@@ -94,18 +95,20 @@ export default {
 //             }
 //         alert("3")
          this.number = number
+         debugger;
          this.util.ajax.get('/admin/authCopyright/bq_change.do?number='+this.number).then(e=> {
              //获取url
 //
              if (e.code == 200) {
-                 alert("111111111111")
+                 debugger;
+//                 alert("111111111111")
                  this.changeDetail = e.data || {};
              }
          })
     }
     
 }
-//            debugger;
+            debugger;
 </script>
 <style lang="less">
 @import 'zheng_detail.less';

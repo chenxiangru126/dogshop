@@ -138,17 +138,17 @@ const config = {
     host: 'localhost',
     port: 8899,
     proxy: {
-      '/mall/*': {
+      // '/mall/*': {
           target: 'http://test.bjyishubiyeji.com',
-        // target: 'http://yddwechat.bjyishubiyeji.com',
-        //target: 'http://test.bjyishubiyeji.com',
-          changeOrigin: true,
-          secure: false
-      },
+      //   // target: 'http://yddwechat.bjyishubiyeji.com',
+      //   //target: 'http://test.bjyishubiyeji.com',
+      //     changeOrigin: true,
+      //     secure: false
+      // },
         '/mall/*': {
             // target: 'http://test.bjyishubiyeji.com',
             // target: 'http://yddwechat.bjyishubiyeji.com',
-            target: 'http://test.bjyishubiyeji.com',
+            target: 'http://songzhan.tunnel.qydev.com',
             changeOrigin: true,
             secure: false
         },
@@ -161,14 +161,6 @@ const config = {
         changeOrigin: true,
         secure: false
         } ,
-        // '/admin/*': {
-        //
-            // target: 'http://songzhan.tunnel.qydev.com',
-            //
-        //     target: 'http://test.bjyishubiyeji.com:8080',
-        //     changeOrigin: true,
-        //     secure: false
-        // }
     }
   }
 

@@ -25,6 +25,7 @@
 
 <style lang="less">
     @import './index.less';
+
 </style>
 
 <script>
@@ -129,7 +130,7 @@ import list from './list.vue';
                     }catch(e){
                         _this.userGetinfo();
                     }
-                },300)
+                },450)
             },
             initData() {
                 var that = this;

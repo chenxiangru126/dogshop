@@ -287,10 +287,10 @@ import {_alert,_confrim,_openimg} from '../../libs/ui';
                 this.Toast('请选择商品分类');
                 return false;
             }
-            if(this.price==''){
-                this.Toast('请填写商品价格');
-                return false;
-            }
+//            if(this.price==''){
+//                this.Toast('请填写商品价格');
+//                return false;
+//            }
             if(this.price==''&&this.copyright_price==''){
                 this.Toast('请填写商品价格或版权价格');
                 return false;
@@ -341,6 +341,7 @@ import {_alert,_confrim,_openimg} from '../../libs/ui';
                 imgUrl:this.imgUrl.join(',')
             }
             util.ajax.post("/mall/goods/goodsSave.do",data).then(e=>{
+                console.log(e);
                 if(e.code==200){
                     this.Toast('商品添加成功');
                     setTimeout(function(){

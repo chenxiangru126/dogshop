@@ -17,6 +17,7 @@
       //   that.initData()
       // }, 500);
     } ,
+
     methods:{
      userGetinfo(){
           var _this = this;

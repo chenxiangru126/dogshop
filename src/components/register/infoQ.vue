@@ -110,7 +110,7 @@ export default {
        })
        
          this.util.ajax.post('/mall/shopauthentication/getShopType.do').then(e=>{
-                 debugger;
+//                 debugger;
                  if(e.code ==200){
                      this.model= e.data.model
                      this.shoptype = e.data.shoptype
