@@ -359,20 +359,31 @@
 
             //查看版权详情
             see_copy_btn(){
-                debugger;
+
+
+
+
+
+
+
+//                debugger;
                 var that = this;
                 let number  = '22A60CC41878924AA027555230B3716D'
                 let  block_cert_numbere='22A60CC41878924AA027555230B3716D'
                 that.$router.push({
-                    name: 'zheng_detail',
+                    name: 'detailData',
                     query: {
                         number:'22A60CC41878924AA027555230B3716D',
                         block_cert_numbere:'22A60CC41878924AA027555230B3716D'
+//                        username:'15210602450' ,
+//                        password:'DD4B21E9EF71E1291183A46B913AE6F2',
+//                        name:'152****2450'
+
                     }
                 })
 
                 event.stopPropagation();
-                debugger;
+//                debugger;
             },
 
 

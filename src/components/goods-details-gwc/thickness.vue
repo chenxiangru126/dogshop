@@ -52,7 +52,7 @@
             this.$parent.dialog = false;
        },
        determine(){
-            debugger;
+//            debugger;
            let typeN = this.typeN
             if(!typeN){
               this.$parent.Place_order(this.typeN);
@@ -62,7 +62,7 @@
               let  id = this.id
               let isShare = this.isShare
               this.util.ajax.post('/admin/sysUserReal/getId.do').then(e => {
-                   debugger;
+//                   debugger;
                     if( e.code == 500){
                         //   未实名
                             this.$router.push('/real?id='+id+'&isShare='+isShare)

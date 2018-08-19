@@ -13,6 +13,7 @@
      mounted(){
        var that=this;
        this.userGetinfo()
+//         this.initData()
       // setTimeout(() => {
       //   that.initData()
       // }, 500);
@@ -20,6 +21,7 @@
 
     methods:{
      userGetinfo(){
+//         debugger
           var _this = this;
           setTimeout(function(){
               try{
@@ -36,10 +38,13 @@
               }
           },300)
       },
+
        initData(){
+
          var that=this;
         this.util.ajax.post('/mall/shopauthentication/shopPage.do').then(e => {
           // 这里还要返回shoptype类型，
+//            console.log(e);
           let shoptype = e.data.shoptype;
           let data = e.data.state;
           let model = e.data.model; 
@@ -53,7 +58,7 @@
             // 企业和个人的免单后的操作
             that.$router.replace('/back_pay?money=' + money+'&state=1&shoptype='+shoptype+'&model='+model)
           } else if (data == 3 && shoptype == 1) {
-  
+
             that.$router.replace('/info')
             return false
           } else if (data == 3 && shoptype == 2) {

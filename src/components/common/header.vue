@@ -4,6 +4,7 @@
         <div class="w rela">
             <div class="_left" v-if='route_name=="switch"||route_name=="shopping_list"||route_name=="order_list_buyer"||route_name=="detailData"||route_name=="register"||route_name=="goods-class"||route_name=="goods-details-sCart"' @click='back_ios'></div>
             <div class="_left" v-else @click='back_event'></div>
+            <div class="_left" v-else-if='route_push=="register2?shoptype=1&model=D&shop_type_id=4" ||route_push=="register2?shoptype=1&model=E&shop_type_id=5"' @click='back_pay'></div>
             <div class="w t-c _center">{{title_name}}</div>
             <div class=" _right flex-v flex-j-c flex-a-c" v-if='route_name=="order_list_seller"||route_name=="order_list_buyer"' @click="order_search">
                 <img src="../../static/images/search.svg" alt="" class="w1_5 h1_5">
@@ -22,7 +23,7 @@
                 <span v-else>全选</span>
             </div>
             <div class=" _right flex-v flex-j-c flex-a-c c6" v-if='route_name=="library-into"'>
-                <span >一键导入      </span>
+                <span >一键导入</span>
             </div>
         </div>
     </div>
@@ -51,7 +52,7 @@
         },
         props:['item'],
         computed: mapState(
-            ['title_name', 'route_name']
+            ['title_name', 'route_name','router_push']
         ),
         // watch:{
         //     $route(now,old){     //监控路由变换，控制返回按钮的显示
@@ -85,6 +86,10 @@
             },
             back_event() {
                 history.back();
+            },
+            //返回到类型选择
+            back_pay(){
+                    this.$router.push({path: '/register1?shoptype=1'});
             },
             back_ios() {
                 try {

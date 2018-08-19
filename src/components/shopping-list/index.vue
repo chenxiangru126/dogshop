@@ -104,6 +104,7 @@ import list from './list.vue';
                             that.$root.eventHup.$emit('childEvent', {
                                 shopping_checked: true
                             })
+
                         } else {
                             that.$root.eventHup.$emit('childEvent', {
                                 shopping_checked: false
@@ -139,6 +140,7 @@ import list from './list.vue';
                     currentPage:this.currentPage,
                 }
                 util.ajax.post("/mall/cart/getCartData.do",data).then(e=>{
+                    console.log(e);
                     if(e.data.list&&e.data.list.length==0){
                         if(this.currentPage==1){
                              this.emptylist = true;
@@ -153,9 +155,9 @@ import list from './list.vue';
                     for(let i in e.data.list){
                         e.data.list[i].check = true;
                     }
-                    that.list =  that.list.concat(e.data.list||[]); 
+                    that.list =  that.list.concat(e.data.list||[]);
                     }
-                    
+
                 }).catch(
                     //  this.emptylist = true
                 )
