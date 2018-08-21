@@ -124,7 +124,7 @@
         },
         mounted() {
             var that = this;
-            console.log(that.$route.query)
+//            console.log(that.$route.query)
         },
         methods: {
             initData() {
@@ -133,16 +133,18 @@
                     '&viewOrderType=' + that.viewOrderType +
                     '&count=' + that.$route.query.count +
                     '&type=' + that.$route.query.type;
+//                debugger
                 this.util.ajax.get(url).then(e => {
                     if (e.code == 200) {
+                        if (e.data == null) {
+                            this.$router.push('/order_list_buyer')
+                        }
+                        console.log(e.data);
                         that.details = e.data || {};
                         that.addressMap = e.data.addressMap;
                         that.address_id = e.data.addressMap.recive_address;
-//                        if(e.data == null){
-//                            this.$router.push({
-//                                name: 'order_list_buyer'
-//                            })
-//                        }
+
+
                     }
                 }).catch()
     

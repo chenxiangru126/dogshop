@@ -61,14 +61,17 @@
             //判断版权实名认证
               let  id = this.id
               let isShare = this.isShare
+                if(id==null){
+                    this.Toast('加入失败')
+                }
               this.util.ajax.post('/admin/sysUserReal/getId.do').then(e => {
 //                   debugger;
+                  console.log(this.id);
                     if( e.code == 500){
                         //   未实名
                             this.$router.push('/real?id='+id+'&isShare='+isShare)
                       }else if( e.code == 200){
-                          this.$router.push('/order_create?id='+id+'&type=1&count=1')
-                         
+                                this.$router.push('/order_create?id='+id+'&type=1&count=1')
                       }
                 }).catch()  
                
