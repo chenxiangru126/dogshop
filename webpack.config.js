@@ -140,13 +140,14 @@ const config = {
     proxy: {
       // '/mall/*': {
       //     target: 'http://test.bjyishubiyeji.com',
-      //   // target: 'http://yddwechat.bjyishubiyeji.com',
-      //   //target: 'http://test.bjyishubiyeji.com',
+      //   target: 'http://yddwechat.bjyishubiyeji.com',
+      //   target: 'http://test.bjyishubiyeji.com',
       //     changeOrigin: true,
       //     secure: false
       // },
         '/mall/*': {
-            target: 'http://test.bjyishubiyeji.com',
+            // target: 'http://test.bjyishubiyeji.com',
+            target:'http://admin22.tunnel.qydev.com',
             // target: 'http://yddwechat.bjyishubiyeji.com',
             // target: 'http://songzhan.tunnel.qydev.com',
             changeOrigin: true,

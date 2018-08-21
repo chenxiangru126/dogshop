@@ -138,6 +138,11 @@
                         that.details = e.data || {};
                         that.addressMap = e.data.addressMap;
                         that.address_id = e.data.addressMap.recive_address;
+//                        if(e.data == null){
+//                            this.$router.push({
+//                                name: 'order_list_buyer'
+//                            })
+//                        }
                     }
                 }).catch()
     

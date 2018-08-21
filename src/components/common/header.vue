@@ -4,7 +4,7 @@
         <div class="w rela">
             <div class="_left" v-if='route_name=="switch"||route_name=="shopping_list"||route_name=="order_list_buyer"||route_name=="detailData"||route_name=="register"||route_name=="goods-class"||route_name=="goods-details-sCart"' @click='back_ios'></div>
             <div class="_left" v-else @click='back_event'></div>
-            <div class="_left" v-else-if='route_push=="register2?shoptype=1&model=D&shop_type_id=4" ||route_push=="register2?shoptype=1&model=E&shop_type_id=5"' @click='back_pay'></div>
+            <!--<div class="_left" v-else-if='route_push=="register2?shoptype=1&model=D&shop_type_id=4" ||route_push=="register2?shoptype=1&model=E&shop_type_id=5"' @click='back_pay'></div>-->
             <div class="w t-c _center">{{title_name}}</div>
             <div class=" _right flex-v flex-j-c flex-a-c" v-if='route_name=="order_list_seller"||route_name=="order_list_buyer"' @click="order_search">
                 <img src="../../static/images/search.svg" alt="" class="w1_5 h1_5">
@@ -88,9 +88,9 @@
                 history.back();
             },
             //返回到类型选择
-            back_pay(){
-                    this.$router.push({path: '/register1?shoptype=1'});
-            },
+//            back_pay(){
+//                    this.$router.push({path: '/register1?shoptype=1'});
+//            },
             back_ios() {
                 try {
                     iosObject.closeHtml();

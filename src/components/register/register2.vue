@@ -161,9 +161,9 @@
                 let model = this.model
                 let shoptype = this.shoptype  
                  let shop_type_id = shop_type_id
-                    if(a==1 && shoptype == 1){
+                    if(a==1 && shoptype== 1){
                          url = location.protocol+'//'+location.hostname+'/mall/shopauthentication/bailMoney?payWay=1&model='+model+'&shoptype='+shoptype
-                          iosObject.showCheckOrderBtn(location.origin+'/index.html#/info')
+                          iosObject.showCheckOrderBtn(location.origin+'/index.html#/infoQ')
                           window.location.href=url;
                           return false;
                     }else if(a==1 && shoptype == 2){
@@ -181,15 +181,16 @@
                           iosObject.showCheckOrderBtn(location.origin+'/index.html#/infoQ')
                           window.location.href=url;
                            return false;
-                                            
-                            }
+//                        }
+//
+                        }
                                
                                         // iosObject.toPayVC(url)
                                 }
-     
+//
 
         }
-        
+
     }
 </script>
 
